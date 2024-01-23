@@ -10,7 +10,7 @@ let jsonData = {};
 xhr.onload = () => {
     if(xhr.status === 200) {
         jsonData = JSON.parse(xhr.responseText);
-        console.log(jsonData);
+        // console.log(jsonData);
 
         itemsPerPage = 5;
         pageNumber = 1;
@@ -76,7 +76,7 @@ xhr.onload = () => {
             // paginator
             function renderPaginator() {
                 
-                const paginator = document.getElementById("paginator");
+                const paginator = document.getElementById("buttons");
 
                 paginator.innerHTML = "";
             
@@ -149,6 +149,50 @@ xhr.onload = () => {
                     paginator.appendChild(pageBtn);
             
                 }
+
+                nxtBtn = document.createElement("button");
+                nxtBtn.innerText = "Next";
+                nxtBtn.type = "button";
+                nxtBtn.classList.add("btn", "btn-light", "mx-1"); 
+                nxtBtn.addEventListener("click", () => {
+                    pageNumber++;
+                    nxtBtn.classList.add("btn", "btn-primary");
+                    nxtBtn.classList.remove("btn-light");
+                    renderTableBody(pageNumber ? pageNumber : 1); 
+
+                    document.querySelectorAll(".btn").forEach(button => {
+                        button.classList.remove("btn-primary");
+                        button.classList.add("btn-light");
+                    });
+
+                    pgBtn = document.querySelector(`.pagebutton${pageNumber}`);
+                    pgBtn.classList.add('btn', 'btn-primary');
+                    pgBtn.classList.remove("btn-light");
+                    // renderPaginator()
+                });
+                paginator.appendChild(nxtBtn);
+
+
+                lastBtn = document.createElement("button");
+                lastBtn.innerText = "Last";
+                lastBtn.type = "button";
+                lastBtn.classList.add("btn", "btn-light", "mx-1"); 
+                lastBtn.addEventListener("click", () => {
+                    lastBtn.classList.add("btn", "btn-primary");
+                    lastBtn.classList.remove("btn-light");
+                    renderTableBody(totalPages); 
+                    
+                    document.querySelectorAll(".btn").forEach(button => {
+                        button.classList.remove("btn-primary");
+                        button.classList.add("btn-light");
+                    });
+
+                    pgBtn = document.querySelector(`.pagebutton${totalPages}`);
+                    pgBtn.classList.add('btn', 'btn-primary');
+                    pgBtn.classList.remove("btn-light");
+                });
+                paginator.appendChild(lastBtn);
+
             }
 
             renderTableBody(pageNumber);
