@@ -107,10 +107,10 @@ xhr.onload = () => {
                 prevBtn.type = "button";
                 prevBtn.classList.add("btn", "btn-light", "mx-1"); 
                 prevBtn.addEventListener("click", () => {
-                    console.log(pageNumber);
+                    pageNumber--;
                     prevBtn.classList.add("btn", "btn-primary");
                     prevBtn.classList.remove("btn-light");
-                    renderTableBody(pageNumber ? pageNumber-- : 1); 
+                    renderTableBody(pageNumber ? pageNumber : 1); 
 
                     document.querySelectorAll(".btn").forEach(button => {
                         button.classList.remove("btn-primary");
@@ -151,8 +151,8 @@ xhr.onload = () => {
                 }
             }
 
-            // renderTableBody(pageNumber);
-            // renderPaginator();
+            renderTableBody(pageNumber);
+            renderPaginator();
             
     }
 }
