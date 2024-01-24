@@ -49,11 +49,11 @@ xhr.onload = () => {
             const body = document.createElement("tbody");
         
             function renderTableBody(pageNumber) {
+
                 body.innerHTML = "";
                 let firstIndex = (pageNumber-1) * itemsPerPage;
                 let lastIndex = firstIndex + itemsPerPage;
 
-                console.log(firstIndex, lastIndex);
         
                 let paginatedData = jsonData.slice(firstIndex, lastIndex);
         
@@ -85,11 +85,13 @@ xhr.onload = () => {
                 firstBtn = document.createElement("button");
                 firstBtn.innerText = "First";
                 firstBtn.type = "button";
-                firstBtn.classList.add("btn", "btn-light", "mx-1"); 
+                firstBtn.classList.add("btn", "btn-light", "mx-1", "mt-4"); 
+                
                 firstBtn.addEventListener("click", () => {
                     firstBtn.classList.add("btn", "btn-primary");
                     firstBtn.classList.remove("btn-light");
-                    renderTableBody(1); 
+                    pageNumber = 1;
+                    renderTableBody(pageNumber); 
                     
                     document.querySelectorAll(".btn").forEach(button => {
                         button.classList.remove("btn-primary");
@@ -105,12 +107,13 @@ xhr.onload = () => {
                 prevBtn = document.createElement("button");
                 prevBtn.innerText = "Previous";
                 prevBtn.type = "button";
-                prevBtn.classList.add("btn", "btn-light", "mx-1"); 
+                prevBtn.classList.add("btn", "btn-light", "mx-1", "mt-4"); 
                 prevBtn.addEventListener("click", () => {
                     pageNumber--;
+                    pageNumber = pageNumber > 0 ? pageNumber : totalPages;
                     prevBtn.classList.add("btn", "btn-primary");
                     prevBtn.classList.remove("btn-light");
-                    renderTableBody(pageNumber ? pageNumber : 1); 
+                    renderTableBody(pageNumber); 
 
                     document.querySelectorAll(".btn").forEach(button => {
                         button.classList.remove("btn-primary");
@@ -130,7 +133,7 @@ xhr.onload = () => {
                     let pageBtn = document.createElement("button");
                     pageBtn.type = "button";
                     pageBtn.innerText = i;
-                    pageBtn.classList.add("btn", "btn-light", "mx-1", `pagebutton${i}`); 
+                    pageBtn.classList.add("btn", "btn-light", "mx-1", "mt-4", `pagebutton${i}`); 
                     pageBtn.addEventListener("click", () => {
                         // Reset to grey
                         document.querySelectorAll(".btn").forEach(button => {
@@ -153,12 +156,13 @@ xhr.onload = () => {
                 nxtBtn = document.createElement("button");
                 nxtBtn.innerText = "Next";
                 nxtBtn.type = "button";
-                nxtBtn.classList.add("btn", "btn-light", "mx-1"); 
+                nxtBtn.classList.add("btn", "btn-light", "mx-1", "mt-4"); 
                 nxtBtn.addEventListener("click", () => {
                     pageNumber++;
+                    pageNumber = pageNumber > totalPages ? pageNumber % totalPages : pageNumber;
                     nxtBtn.classList.add("btn", "btn-primary");
                     nxtBtn.classList.remove("btn-light");
-                    renderTableBody(pageNumber ? pageNumber : 1); 
+                    renderTableBody(pageNumber); 
 
                     document.querySelectorAll(".btn").forEach(button => {
                         button.classList.remove("btn-primary");
@@ -176,11 +180,12 @@ xhr.onload = () => {
                 lastBtn = document.createElement("button");
                 lastBtn.innerText = "Last";
                 lastBtn.type = "button";
-                lastBtn.classList.add("btn", "btn-light", "mx-1"); 
+                lastBtn.classList.add("btn", "btn-light", "mx-1", "mt-4"); 
                 lastBtn.addEventListener("click", () => {
                     lastBtn.classList.add("btn", "btn-primary");
                     lastBtn.classList.remove("btn-light");
-                    renderTableBody(totalPages); 
+                    pageNumber = totalPages
+                    renderTableBody(pageNumber); 
                     
                     document.querySelectorAll(".btn").forEach(button => {
                         button.classList.remove("btn-primary");
